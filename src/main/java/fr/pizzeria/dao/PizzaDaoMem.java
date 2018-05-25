@@ -10,7 +10,7 @@ import fr.pizzeria.model.Pizza;
  * @author R.B.
  *
  */
-public class PizzaDaoList implements IPizzaDao {
+public class PizzaDaoMem implements IPizzaDao {
 	
 	/** pizzas : List<Pizza> */
 	private List<Pizza> pizzas;
@@ -18,7 +18,7 @@ public class PizzaDaoList implements IPizzaDao {
 	/**
 	 * Constructeur
 	 */
-	public PizzaDaoList(){
+	public PizzaDaoMem(){
 		pizzas = new ArrayList<Pizza>();
 		pizzas.add(new Pizza("PEP", "Pépéroni", CategoriePizza.VIANDE, 12.5));
 		pizzas.add(new Pizza("MAR", "Margherita", CategoriePizza.SANS_VIANDE, 14));

@@ -3,7 +3,7 @@ package fr.pizzeria.console;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.dao.PizzaDaoList;
+import fr.pizzeria.dao.PizzaDaoMem;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.services.MenuServiceFactory;
 
@@ -24,7 +24,7 @@ public class PizzeriaAdminConsoleApp {
 	public static void main(String[] args) throws Exception {
 						
 		Scanner scanner = new Scanner(System.in);
-		IPizzaDao dao = new PizzaDaoList();
+		IPizzaDao dao = new PizzaDaoMem();
 		
 		int choix = 0;
 		do {

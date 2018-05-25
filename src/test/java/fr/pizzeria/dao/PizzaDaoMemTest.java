@@ -14,7 +14,7 @@ import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
-public class PizzaDaoListTest {
+public class PizzaDaoMemTest {
 
 	public static List<Pizza> list() {
 		ArrayList<Pizza> pizzas = new ArrayList<>();
@@ -30,7 +30,7 @@ public class PizzaDaoListTest {
 
 	@Test
 	public void testFindAllPizzas() {
-		IPizzaDao dao = new PizzaDaoList();
+		IPizzaDao dao = new PizzaDaoMem();
 		List<Pizza> pizzas = dao.findAllPizzas();
 		assertEquals(8, pizzas.size());
 
@@ -39,7 +39,7 @@ public class PizzaDaoListTest {
 	@Test
 	public void testSaveNewPizza() {
 
-		IPizzaDao dao = new PizzaDaoList();
+		IPizzaDao dao = new PizzaDaoMem();
 		dao.saveNewPizza(null);
 
 		assertEquals(9, dao.findAllPizzas().size());
@@ -48,7 +48,7 @@ public class PizzaDaoListTest {
 
 	@Test
 	public void testUpdatePizzaNominal() {
-		IPizzaDao dao = new PizzaDaoList();
+		IPizzaDao dao = new PizzaDaoMem();
 		
 		dao.saveNewPizza(null);
 		dao.saveNewPizza(new Pizza(null, null, null, -1000.0));
@@ -67,13 +67,13 @@ public class PizzaDaoListTest {
 	@Test(expected=UpdatePizzaException.class)
 	public void testUpdatePizzaCodePizzaNull() throws UpdatePizzaException {
 		
-		new PizzaDaoList().updatePizza(null, new Pizza("POP", "Popop", CategoriePizza.VIANDE, 15.6));
+		new PizzaDaoMem().updatePizza(null, new Pizza("POP", "Popop", CategoriePizza.VIANDE, 15.6));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testUpdatePizzaPizzaNull() {
 		
-		new PizzaDaoList().updatePizza("REI", null);
+		new PizzaDaoMem().updatePizza("REI", null);
 	}
 
 	@Test
