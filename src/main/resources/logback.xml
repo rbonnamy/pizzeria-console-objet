@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- redirection des logs vers la sortir Console Standard -->
+	<appender name="DEFAULT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<!-- politique de log pour les classes du package dev.paie.config -->
+	<logger name="dev.paie.config" level="DEBUG" />
+
+	<!-- règle de logs par défaut. Ici : niveau INFO vers la sortie standard -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+</configuration>
