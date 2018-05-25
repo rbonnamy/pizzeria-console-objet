@@ -1,4 +1,4 @@
-package fr.pizzeria.ihm;
+package fr.pizzeria.services;
 
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;

@@ -1,4 +1,4 @@
-package fr.pizzeria.ihm;
+package fr.pizzeria.services;
 
 import java.util.List;
 import java.util.Scanner;

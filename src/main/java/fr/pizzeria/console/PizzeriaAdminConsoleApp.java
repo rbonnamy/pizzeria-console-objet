@@ -5,7 +5,7 @@ import java.util.Scanner;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.dao.PizzaDaoList;
 import fr.pizzeria.exception.StockageException;
-import fr.pizzeria.ihm.MenuServiceFactory;
+import fr.pizzeria.services.MenuServiceFactory;
 
 /**
  * Application de gestion d'une pizzeria
