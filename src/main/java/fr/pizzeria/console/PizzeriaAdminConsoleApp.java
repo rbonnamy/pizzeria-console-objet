@@ -26,8 +26,8 @@ public class PizzeriaAdminConsoleApp {
 		Scanner scanner = new Scanner(System.in);
 		IPizzaDao dao = new PizzaDaoList();
 		
-		boolean continuer = true;
-		while (continuer) {
+		int choix = 0;
+		do {
 
 			// Affichage du menu
 			afficher();
@@ -36,7 +36,7 @@ public class PizzeriaAdminConsoleApp {
 			String choixMenu = scanner.next();
 			
 			// Conversion du choix utilisateur en int
-			int choix = Integer.parseInt(choixMenu);
+			choix = Integer.parseInt(choixMenu);
 			
 			// On exécute l'option correspondant au choix de l'utilisateur
 			try {
@@ -45,7 +45,7 @@ public class PizzeriaAdminConsoleApp {
 			catch (StockageException e){
 				System.out.println(e.getMessage());				
 			}
-		}
+		} while (choix!=99);
 		
 		scanner.close();
 	}
