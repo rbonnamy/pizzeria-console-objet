@@ -5,14 +5,17 @@ import java.util.Scanner;
 import org.springframework.stereotype.Service;
 
 import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.StockageException;
 
+/** Service de suppression d'une pizza
+ * @author DIGINAMIC
+ */
 @Service
 public class SupprimerPizzaService extends MenuService {
 	
 	/** Constructeur
-	 * @param dao Instance de {@link IPizzaDao} utilisée pour la persistence
-	 * @param scanner scanner permettant d'interroger l'utilisateur
+	 * @param dao dao servant à gérer la persistence des données
 	 */
 	public SupprimerPizzaService(IPizzaDao dao) {
 		this.dao = dao;
@@ -23,6 +26,10 @@ public class SupprimerPizzaService extends MenuService {
 		
 		System.out.println("Veuillez choisir la pizza à supprimer:");
 		String codeASupprimer = scanner.next();
+		
+		if (!dao.pizzaExists(codeASupprimer)){
+			throw new DeletePizzaException("Cette pizza n'existe pas.");
+		}
 	
 		dao.deletePizza(codeASupprimer);
 		

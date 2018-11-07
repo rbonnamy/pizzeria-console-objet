@@ -5,15 +5,19 @@ import java.util.Scanner;
 import org.springframework.stereotype.Service;
 
 import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.exception.PrixNegatifException;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
+/** Service de mise à jour d'une pizza
+ * @author DIGINAMIC
+ */
 @Service
 public class ModifierPizzaService extends MenuService {
 
-	/**
-	 * Constructeur
+	/** Constructeur
+	 * @param dao dao servant à gérer la persistence des données
 	 */
 	public ModifierPizzaService(IPizzaDao dao) {
 		this.dao = dao;
@@ -41,6 +45,12 @@ public class ModifierPizzaService extends MenuService {
 			String prixStr = scanner.next();
 
 			double prix = Double.parseDouble(prixStr);
+			
+			// Vérification des saisies de l'utilisateur
+			if (prix <=0){
+				throw new PrixNegatifException();
+			}
+			
 			Pizza pizza = new Pizza(code, libelle, categorie, prix);
 			
 			dao.updatePizza(codeAModifier, pizza);

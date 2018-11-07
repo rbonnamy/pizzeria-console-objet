@@ -1,17 +1,31 @@
 package fr.pizzeria.model;
 
+/** Représente la catégorie d'une pizza
+ * @author DIGINAMIC
+ */
 public enum CategoriePizza {
 
+	/** VIANDE */
 	VIANDE("Viande"), 
+	/** POISSON */
 	POISSON("Poisson"), 
+	/** SANS_VIANDE */
 	SANS_VIANDE("Sans viande");
 	
+	/** libellé de la catégorie */
 	private String libelle;
 
+	/** Constructeur
+	 * @param libelle libellé
+	 */
 	private CategoriePizza(String libelle){
 		this.libelle = libelle;
 	}
 	
+	/** Retourne une catégorie en fonction d'un numéro saisi par l'utilisateur
+	 * @param numero numéro de catégorie
+	 * @return {@link CategoriePizza}
+	 */
 	public static CategoriePizza get(int numero){
 		if (numero==1){
 			return VIANDE;
@@ -29,6 +43,10 @@ public enum CategoriePizza {
 		return libelle;
 	}
 	
+	/** Indique si oui ou non la catégorie dont le nom est passé en paramètre existe ou non
+	 * @param nom nom de la catégorie
+	 * @return boolean
+	 */
 	public static boolean exists(String chaine){
 		CategoriePizza[] categs = values();
 		

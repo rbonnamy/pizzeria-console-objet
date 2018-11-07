@@ -10,6 +10,7 @@ import fr.pizzeria.exception.StockageException;
  */
 public abstract class MenuService {
 	
+	/** dao */
 	protected IPizzaDao dao;
 	
 	

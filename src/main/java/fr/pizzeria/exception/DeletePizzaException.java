@@ -5,6 +5,9 @@ package fr.pizzeria.exception;
  */
 public class DeletePizzaException extends StockageException {
 
+	/** Constructeur
+	 * @param message message d'erreur
+	 */
 	public DeletePizzaException(String message) {
 		super(message);
 	}

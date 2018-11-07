@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
@@ -122,13 +123,11 @@ public class PizzaDaoFichier implements IPizzaDao {
 
 	@Override
 	public Pizza findPizzaByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new NotImplementedException("Not implemented yet !");
 	}
 
 	@Override
 	public boolean pizzaExists(String code) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NotImplementedException("Not implemented yet !");
 	}
 }

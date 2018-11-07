@@ -5,11 +5,10 @@ package fr.pizzeria.exception;
  */
 public class StockageException extends Exception {
 
+	/** Constructeur
+	 * @param message message d'erreur
+	 */
 	public StockageException(String message) {
 		super(message);
-	}
-	
-	public StockageException(Exception e) {
-		super(e);
 	}
 }

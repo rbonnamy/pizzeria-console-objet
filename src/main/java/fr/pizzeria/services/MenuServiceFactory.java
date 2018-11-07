@@ -3,12 +3,25 @@ package fr.pizzeria.services;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 
+/** Factory qui retourne un service de gestion en fonction d'un choix de l'utilisateur
+ * @author DIGINAMIC
+ */
 public class MenuServiceFactory {
 
+	/**
+	 * Constructeur
+	 */
 	public MenuServiceFactory() {
-		// TODO Auto-generated constructor stub
 	}
 	
+	/** Retourne une instance de {@link MenuService} en fonction d'un choix dans le menu de gestion
+	 * de la pizzeria. 
+	 * La dao passée en paramètre est celle qui sera utilisée pour gérer la persistence des pizzas.
+	 * @param dao dao à utiliser pour gérer la persistence des pizzas
+	 * @param choix choix de l'utilisateur dans le menu
+	 * @return {@link MenuService}
+	 * @throws StockageException en cas de non respect d'une règle métier
+	 */
 	public static MenuService getMenuService(IPizzaDao dao, int choix) throws StockageException {
 		switch (choix){
 		case 1: return new ListerPizzasService(dao);

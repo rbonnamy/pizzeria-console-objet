@@ -13,20 +13,34 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 
 import fr.pizzeria.utils.JdbcProperties;
 
+/** Pool de connexion JDBC
+ * @author DIGINAMIC
+ */
 public class ConnectionPool {
 	
+	/** connectionPool */
 	private static ConnectionPool connectionPool = new ConnectionPool();
 	
+	/** dataSource */
 	private DataSource dataSource;
 	
+	/**
+	 * Constructeur privé
+	 */
 	private ConnectionPool(){
 		initPool();
 	}
 	
+	/** Retourne le pool de connexions
+	 * @return {@link ConnectionPool}
+	 */
 	public static ConnectionPool getInstance(){
 		return connectionPool;
 	}
 
+	/**
+	 * Initialise le pool de connexions
+	 */
 	private void initPool() {
 		try {
 			String driverName = JdbcProperties.getInstance().getString("jdbc.driverClassName");
@@ -49,6 +63,9 @@ public class ConnectionPool {
 		}
 	}
 
+	/** Retourne une connexion JDBC
+	 * @return {@link Connection}
+	 */
 	public Connection getConnection() {
 		try {
 			return dataSource.getConnection();

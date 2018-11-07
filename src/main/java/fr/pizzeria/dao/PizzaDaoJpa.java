@@ -1,13 +1,11 @@
 package fr.pizzeria.dao;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import fr.pizzeria.model.Pizza;
@@ -24,12 +22,16 @@ import fr.pizzeria.model.Pizza;
  */
 public class PizzaDaoJpa extends AbstractDaoBase implements IPizzaDao {
 	
+	/** entityManagerFactory */
 	public static EntityManagerFactory entityManagerFactory;
 	
 	static {
 		entityManagerFactory = Persistence.createEntityManagerFactory("pizzeria");
 	}
 	
+	/**
+	 * Constructeur
+	 */
 	public PizzaDaoJpa() {
 		
 	}
@@ -69,6 +71,8 @@ public class PizzaDaoJpa extends AbstractDaoBase implements IPizzaDao {
 		pizzaFromBase.setPrix(pizza.getPrix());
 		pizzaFromBase.setCategorie(pizza.getCategorie());
 		
+		em.merge(pizzaFromBase);
+		
 		et.commit();
 		em.close();
 		
@@ -77,10 +81,18 @@ public class PizzaDaoJpa extends AbstractDaoBase implements IPizzaDao {
 	@Override
 	public void deletePizza(String codePizza) {
 		EntityManager em = entityManagerFactory.createEntityManager();
+		
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		
 		Pizza pizzaToRemove = findPizzaByCode(codePizza);
+		
+		// Permet d'actualiser la pizza au sein du contexte de persistence
+		// Si par exemple la pizza a été modifiée lors d'une transaction précédente, il est 
+		// impossible de supprimer la pizza sans l'avoir précédé d'un merge
+		pizzaToRemove = em.merge(pizzaToRemove);
+					
+		// Suppression de la pizza
 		em.remove(pizzaToRemove);
 		
 		et.commit();
@@ -97,9 +109,15 @@ public class PizzaDaoJpa extends AbstractDaoBase implements IPizzaDao {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		TypedQuery<Pizza> query = em.createQuery("FROM Pizza WHERE code=:code", Pizza.class);
 		query.setParameter("code", code);
-		em.close();
 		
-		Pizza pizzaFromBase = query.getSingleResult();
-		return pizzaFromBase;
+		List<Pizza> pizzas = query.getResultList();
+		try {
+			if (pizzas.size()>0){
+				return pizzas.get(0);
+			}
+			return null;
+		} finally {
+			em.close();
+		}
 	}
 }

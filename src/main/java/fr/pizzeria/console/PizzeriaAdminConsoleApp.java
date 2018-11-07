@@ -3,14 +3,14 @@ package fr.pizzeria.console;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.dao.PizzaDaoMem;
+import fr.pizzeria.dao.PizzaDaoJpa;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.services.MenuServiceFactory;
 
 /**
  * Application de gestion d'une pizzeria
  * 
- * @author R.B.
+ * @author DIGINAMIC
  *
  */
 public class PizzeriaAdminConsoleApp {
@@ -24,7 +24,7 @@ public class PizzeriaAdminConsoleApp {
 	public static void main(String[] args) throws Exception {
 						
 		Scanner scanner = new Scanner(System.in);
-		IPizzaDao dao = new PizzaDaoMem();
+		IPizzaDao dao = new PizzaDaoJpa();
 		
 		int choix = 0;
 		do {
@@ -50,6 +50,9 @@ public class PizzeriaAdminConsoleApp {
 		scanner.close();
 	}
 	
+	/**
+	 * Affichage du menu
+	 */
 	private static void afficher() {
 		System.out.println("***** Pizzeria Administration *****");
 		System.out.println("1. Lister les pizzas");

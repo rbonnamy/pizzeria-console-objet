@@ -5,12 +5,10 @@ package fr.pizzeria.exception;
  */
 public class SavePizzaException extends StockageException {
 
+	/** Constructeur
+	 * @param message message d'erreur
+	 */
 	public SavePizzaException(String message) {
 		super(message);
 	}
-	
-	public SavePizzaException(Exception e) {
-		super(e);
-	}
-
 }

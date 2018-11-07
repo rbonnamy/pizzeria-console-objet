@@ -9,11 +9,14 @@ import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
 
+/** Service permettant de lister les pizzas
+ * @author DIGINAMIC
+ */
 @Service
 public class ListerPizzasService extends MenuService {
 
 	/** Constructeur
-	 * @param pizzas
+	 * @param dao dao servant à gérer la persistence des données
 	 */
 	public ListerPizzasService(IPizzaDao dao) {
 		this.dao = dao;

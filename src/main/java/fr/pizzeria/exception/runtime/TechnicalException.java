@@ -1,4 +1,4 @@
-package fr.pizzeria.exception;
+package fr.pizzeria.exception.runtime;
 
 /** Exception technique grave
  * @author DIGINAMIC

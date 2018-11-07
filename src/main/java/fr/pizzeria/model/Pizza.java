@@ -2,10 +2,12 @@ package fr.pizzeria.model;
 
 import java.lang.reflect.Field;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -17,25 +19,30 @@ import fr.pizzeria.validator.Rule;
  * @author RB
  */
 @Entity
+@Table(name="pizzas")
 public class Pizza {
 	
+	/** id */
 	@Id
 	private int id;
 	
+	/** code */
 	@ToString(toUppercase=false)
 	private String code;
 	
+	/** libelle */
 	private String libelle;
 	
+	/** prix */
 	@Rule(min=0)
 	@ToString(toUppercase=false)
 	private double prix;
 	
+	/** categorie */
 	@ToString(toUppercase=false)
+	@Column(name="CATEGORIE")
+	@Enumerated(EnumType.STRING)
 	private CategoriePizza categorie;
-	
-	private static int currentId=0;
-	
 	
 	/**
 	 * Constructeur par défaut obligatoire
@@ -74,6 +81,7 @@ public class Pizza {
 		this.prix = prix;
 	}
 	
+	@Override
 	public boolean equals(Object o){
 		if (!(o instanceof Pizza)){
 			return false;
@@ -85,10 +93,12 @@ public class Pizza {
 		return builder.isEquals();
 	}
 	
+	@Override
 	public int hashCode(){
 		return new HashCodeBuilder().append(this.code).append(this.libelle).append(this.prix).toHashCode();
 	}
 	
+	@Override
 	public String toString(){
 		
 		Class<Pizza> cl = Pizza.class;
@@ -133,27 +143,58 @@ public class Pizza {
 		return chaine;
 	}
 
+	/** Getter for id
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
+
+	/** Setter
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	/** Getter for code
+	 * @return the code
+	 */
 	public String getCode() {
 		return code;
 	}
+
+	/** Setter
+	 * @param code the code to set
+	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	/** Getter for libelle
+	 * @return the libelle
+	 */
 	public String getLibelle() {
 		return libelle;
 	}
+
+	/** Setter
+	 * @param libelle the libelle to set
+	 */
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
+
+	/** Getter for prix
+	 * @return the prix
+	 */
 	public double getPrix() {
 		return prix;
 	}
+
+	/** Setter
+	 * @param prix the prix to set
+	 */
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}

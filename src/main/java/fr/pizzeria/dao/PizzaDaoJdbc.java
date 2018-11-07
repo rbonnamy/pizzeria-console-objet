@@ -8,25 +8,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
  * Implémentation base de données.
  * 
- * create table pizzas (id int(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, code
- * varchar(3) not null, libelle varchar(50) not null, prix decimal(5,2), id_cat
- * int(10) not null);
+ * create table pizzas (id int(8) AUTO_INCREMENT NOT NULL PRIMARY KEY, code
+ * varchar(8) not null, libelle varchar(50) not null, prix decimal(5,2), categorie
+ * varchar(15) not null);
  * 
  * @author R.B.
  *
  */
 public class PizzaDaoJdbc extends AbstractDaoBase implements IPizzaDao {
 	
-	private Connection conn;
-	
+	/**
+	 * Constructeur
+	 */
 	public PizzaDaoJdbc() {
 	}
 
@@ -39,6 +38,7 @@ public class PizzaDaoJdbc extends AbstractDaoBase implements IPizzaDao {
 		Statement statement = null;
 		ResultSet res = null;
 		try {
+			conn = DbMgr.getInstance().getConnection();
 			statement = conn.createStatement();
 			res = statement.executeQuery("SELECT * FROM pizzas");
 			
@@ -73,8 +73,16 @@ public class PizzaDaoJdbc extends AbstractDaoBase implements IPizzaDao {
 			statement.setString(2, pizza.getLibelle());
 			statement.setDouble(3, pizza.getPrix());
 			statement.setString(4, pizza.getCategorie().name());
-
+			statement.executeUpdate();
+			
+			conn.commit();
+			
 		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				manageSqlException(e1);
+			}
 			manageSqlException(e);
 		} finally {
 			closeSqlResources(conn, statement);
@@ -93,8 +101,15 @@ public class PizzaDaoJdbc extends AbstractDaoBase implements IPizzaDao {
 			statement.setDouble(3, pizza.getPrix());
 			statement.setString(4, pizza.getCategorie().name());
 			statement.setString(5, codePizza);
-
+			statement.executeUpdate();
+			
+			conn.commit();
 		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				manageSqlException(e1);
+			}
 			manageSqlException(e);
 		} finally {
 			closeSqlResources(conn, statement);
@@ -109,8 +124,15 @@ public class PizzaDaoJdbc extends AbstractDaoBase implements IPizzaDao {
 			conn = DbMgr.getInstance().getConnection();
 			statement = conn.prepareStatement("DELETE FROM pizzas WHERE CODE=?");
 			statement.setString(1, codePizza);
-
+			statement.executeUpdate();
+			
+			conn.commit();
 		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				manageSqlException(e1);
+			}
 			manageSqlException(e);
 		} finally {
 			closeSqlResources(conn, statement);
@@ -119,12 +141,36 @@ public class PizzaDaoJdbc extends AbstractDaoBase implements IPizzaDao {
 
 	@Override
 	public boolean pizzaExists(String code) {
-		throw new NotImplementedException("Not implemented yet !");
+		return findPizzaByCode(code)!=null;
 	}
 
 	@Override
-	public Pizza findPizzaByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+	public Pizza findPizzaByCode(String codePizza) {
+		Pizza pizza = null;
+
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet res = null;
+		try {
+			conn = DbMgr.getInstance().getConnection();
+			statement = conn.createStatement();
+			res = statement.executeQuery("SELECT * FROM pizzas WHERE code='"+codePizza+"'");
+			
+			while (res.next()) {
+				int id = res.getInt("ID");
+				String code = res.getString("CODE");
+				String libelle = res.getString("LIBELLE");
+				Double prix = res.getDouble("PRIX");
+				CategoriePizza categ = CategoriePizza.valueOf(res.getString("CATEGORIE"));
+
+				pizza = new Pizza(id, code, libelle, categ, prix);
+			}	
+			res.close();
+		} catch (SQLException e) {
+			manageSqlException(e);
+		} finally {
+			closeSqlResources(conn, statement);
+		}
+		return pizza;
 	}
 }
